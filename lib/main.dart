@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const PlanoEstudosApp());
+  runApp(
+    const MaterialApp(
+      home: TelaEstudos(),
+      debugShowCheckedModeBanner: false,
+    ),
+  );
 }
 
-class PlanoEstudosApp extends StatelessWidget {
-  const PlanoEstudosApp({super.key});
+class TelaEstudos extends StatefulWidget {
+  const TelaEstudos({super.key});
 
   @override
-  Widget build(BuildContext context) {
-  return const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: TelaEstudos(),
-      );
-  }
+  State<TelaEstudos> createState() => _TelaEstudosState();
 }
 
-class TelaEstudos extends StatelessWidget {
-  const TelaEstudos({super.key});
+class _TelaEstudosState extends State<TelaEstudos> {
+  // Opcional: variável de contador para tornar o botão funcional
+  int _sessoesConcluidas = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +34,44 @@ class TelaEstudos extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text('Minha rotina'),
+              const Icon(Icons.menu_book, size: 64, color: Colors.indigo),
+              const SizedBox(height: 16),
+              const Text(
+                'Minha rotina',
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              const Text('Uma sessão por vez.'),
+              const SizedBox(height: 24),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Sessões concluídas'),
+                      const SizedBox(height: 8),
+                      Text(
+                        '$_sessoesConcluidas',
+                        style: const TextStyle(fontSize: 36),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _sessoesConcluidas++;
+                  });
+                },
+                child: const Text('Concluir sessão'),
+              ),
             ],
           ),
         ),
       ),
     );
   }
-
-  
 }
