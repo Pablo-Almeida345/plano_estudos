@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(
-    const MaterialApp(
-      home: TelaEstudos(),
-      debugShowCheckedModeBanner: false,
-    ),
-  );
+  runApp(const TelaEstudos());
 }
+
+
 
 class TelaEstudos extends StatefulWidget {
   const TelaEstudos({super.key});
@@ -17,8 +14,14 @@ class TelaEstudos extends StatefulWidget {
 }
 
 class _TelaEstudosState extends State<TelaEstudos> {
-  // Opcional: variável de contador para tornar o botão funcional
-  int _sessoesConcluidas = 0;
+
+  int sessoes = 0;
+
+  void concluirSessao() {
+    setState(() {
+      sessoes = sessoes + 1;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,28 +48,31 @@ class _TelaEstudosState extends State<TelaEstudos> {
               const SizedBox(height: 24),
               Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Sessões concluídas'),
-                      const SizedBox(height: 8),
-                      Text(
-                        '$_sessoesConcluidas',
-                        style: const TextStyle(fontSize: 36),
-                      ),
+                      Text('Sessões concluídas'),
+                      SizedBox(height: 8),
+                      Text('$sessoes', style: TextStyle(fontSize: 36)),
                     ],
                   ),
                 ),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    _sessoesConcluidas++;
-                  });
-                },
+                onPressed: concluirSessao,
                 child: const Text('Concluir sessão'),
+              ),
+              OutlinedButton(
+                onPressed: () {
+                  if (sessoes > 0) {
+                    setState(() {
+                      sessoes = sessoes - 1;
+                    });
+                  }
+                },
+                child: const Text('Desfazer uma sessão'),
               ),
             ],
           ),
@@ -74,4 +80,6 @@ class _TelaEstudosState extends State<TelaEstudos> {
       ),
     );
   }
+
+  
 }
